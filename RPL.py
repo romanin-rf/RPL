@@ -115,5 +115,11 @@ while work:
 		if command_user == 'cdata':
 			data = {"varing": {}, "libs": {}}
 			break
+		if command_user == 'info':
+			with open('config.json') as file_config_data:
+				config_data = json.load(file_config_data)
+			print("Name: {0}".format(config_data["name"]))
+			print("Name Author: {0}".format(config_data["name-author"]))
+			print("Version: {0}".format(config_data["version"]))
 		else:
 			break
