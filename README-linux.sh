@@ -1,2 +1,2 @@
 title README
-cat README
+cat README.md

@@ -1,5 +1,5 @@
 @echo off
 title README
 cls
-type README
+type README.md
 pause
