@@ -1,10 +1,13 @@
-import os, sys, json
+import os, sys, json, pickle
 
 data = {"varing": {}, "libs": {}}
 work = True
 
 while work:
-	command_user = str(input())
+	try:
+		command_user = str(input())
+	except:
+		break
 	while True:
 		if command_user.startswith('text '):
 			if not(len(command_user) <= 5):
@@ -96,15 +99,17 @@ while work:
 					break
 		if command_user.startswith('save '):
 			if not(len(command_user) <= 4):
-				wag_command_namefile = '{0}'.format(command_user[4:(len(command_user))])
-				with open('{0}.json'.format(wag_command_namefile), 'w') as file_data:
-					json.dump(data, file_data)
+				wag_command_namefile = '{0}.rpld'.format(command_user[4:(len(command_user))])
+				open_file_data = open(wag_command_namefile, 'wb')
+				pickle.dump(data, open_file_data)
+				open_file_data.close()
 			break
 		if command_user.startswith('load '):
 			if not(len(command_user) <= 4):
-				wag_command_namefile = '{0}'.format(command_user[4:(len(command_user))])
-				with open('{0}.json'.format(wag_command_namefile)) as file_data:
-					data = json.load(file_data)
+				wag_command_namefile = '{0}.rpld'.format(command_user[4:(len(command_user))])
+				open_file_data = open(wag_command_namefile, 'rb')
+				data = pickle.load(open_file_data)
+				open_file_data.close()
 			break
 		if command_user == 'dirdata':
 			print(data)
