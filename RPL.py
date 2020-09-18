@@ -1,4 +1,4 @@
-import os, json
+import os, sys, json
 
 data = {"varing": {}, "libs": {}}
 work = True
@@ -110,7 +110,11 @@ while work:
 			print(data)
 			break
 		if command_user == 'cwin':
-			os.system("cls")
+			if str(sys.platform) == "win32":
+				os.system("cls")
+			else:
+				if str(sys.platform) == "linux":
+					os.system("clear")
 			break
 		if command_user == 'cdata':
 			data = {"varing": {}, "libs": {}}
