@@ -20,5 +20,5 @@ while len(list_file_dir) != wag:
 
 while True:
 	filename_rpl_for_start = str(input())
-	os.system(f"{start_command}{filename_rpl_for_start}")
-	
+	if filename_rpl_for_start.find('.rpl'):
+		os.system(f"{start_command}{filename_rpl_for_start}")
