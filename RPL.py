@@ -99,14 +99,14 @@ while work:
 					break
 		if command_user.startswith('save '):
 			if not(len(command_user) <= 4):
-				wag_command_namefile = '{0}.rpld'.format(command_user[4:(len(command_user))])
+				wag_command_namefile = '{0}.rpld'.format(command_user[5:(len(command_user))])
 				open_file_data = open(wag_command_namefile, 'wb')
 				pickle.dump(data, open_file_data)
 				open_file_data.close()
 			break
 		if command_user.startswith('load '):
 			if not(len(command_user) <= 4):
-				wag_command_namefile = '{0}.rpld'.format(command_user[4:(len(command_user))])
+				wag_command_namefile = '{0}.rpld'.format(command_user[5:(len(command_user))])
 				open_file_data = open(wag_command_namefile, 'rb')
 				data = pickle.load(open_file_data)
 				open_file_data.close()
