@@ -1,4 +1,4 @@
-import os, sys, json, pickle
+import os, sys, json, pickle, time
 
 data = {"varing": {}, "libs": {}}
 work = True
@@ -97,6 +97,19 @@ while work:
 					var_naw_varstr = int('{0}'.format(command_user[start_wag_varstr_command:end_wag_varstr_command]))
 					data["varing"]["{0}".format(name_new_varstr[0:(len(name_new_varstr) - 1)])] = var_naw_varstr
 					break
+		if command_user.startswith('sleep '):
+			if not(len(command_user) <= 6):
+				if command_user[len(command_user) - 1] == ";":
+					wag_command_sleep = 6
+					start_wag_sleep_command = wag_command_sleep
+					end_wag_sleep_command = len(command_user) - 1
+					try:
+						varing_time_sleep_command = int(command_user[start_wag_sleep_command:end_wag_sleep_command])
+					except ValueError:
+						varing_time_sleep_command = float(command_user[start_wag_sleep_command:end_wag_sleep_command])
+					else:
+						pass
+					time.sleep(varing_time_sleep_command)
 		if command_user.startswith('save '):
 			if not(len(command_user) <= 4):
 				wag_command_namefile = '{0}.rpld'.format(command_user[5:(len(command_user))])
