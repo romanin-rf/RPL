@@ -97,19 +97,57 @@ while work:
 					var_naw_varstr = int('{0}'.format(command_user[start_wag_varstr_command:end_wag_varstr_command]))
 					data["varing"]["{0}".format(name_new_varstr[0:(len(name_new_varstr) - 1)])] = var_naw_varstr
 					break
+		if command_user.startswith('varfloat '):
+			if not(len(command_user) <= 9):
+				if command_user[len(command_user) - 1] == ";":
+					wag_command_varstr = 9
+					start_wag_varstr_command = wag_command_varstr
+					while wag_command_varstr != len(command_user):
+						if command_user[wag_command_varstr] == "=":
+							wag_command_varstr += 1
+							end_wag_varstr_command = wag_command_varstr
+							break
+						wag_command_varstr += 1
+					name_new_varstr = '{0}'.format(command_user[start_wag_varstr_command:end_wag_varstr_command])
+					start_wag_varstr_command = wag_command_varstr
+					while wag_command_varstr != len(command_user):
+						if command_user[wag_command_varstr] == ";":
+							end_wag_varstr_command = wag_command_varstr
+							break
+						wag_command_varstr += 1
+					var_naw_varstr = float('{0}'.format(command_user[start_wag_varstr_command:end_wag_varstr_command]))
+					data["varing"]["{0}".format(name_new_varstr[0:(len(name_new_varstr) - 1)])] = var_naw_varstr
+					break
+		if command_user.startswith('del '):
+			if not(len(command_user) <= 3):
+				if command_user[len(command_user) - 1] == ";":
+					if str(command_user[4:(len(command_user) - 1)]) in data["varing"]:
+						del data["varing"]["{0}".format(str(command_user[4:(len(command_user) - 1)]))]
 		if command_user.startswith('sleep '):
 			if not(len(command_user) <= 6):
 				if command_user[len(command_user) - 1] == ";":
 					wag_command_sleep = 6
 					start_wag_sleep_command = wag_command_sleep
 					end_wag_sleep_command = len(command_user) - 1
+					work_sleep_command = False
 					try:
 						varing_time_sleep_command = int(command_user[start_wag_sleep_command:end_wag_sleep_command])
+						work_sleep_command = True
 					except ValueError:
-						varing_time_sleep_command = float(command_user[start_wag_sleep_command:end_wag_sleep_command])
-					else:
-						pass
-					time.sleep(varing_time_sleep_command)
+						try:
+							varing_time_sleep_command = float(command_user[start_wag_sleep_command:end_wag_sleep_command])
+							work_sleep_command = True
+						except ValueError:
+							if str(command_user[start_wag_sleep_command:end_wag_sleep_command]) in data["varing"]:
+								if type(data["varing"][str(command_user[start_wag_sleep_command:end_wag_sleep_command])]) == int:
+									varing_time_sleep_command = int(data["varing"][str(command_user[start_wag_sleep_command:end_wag_sleep_command])])
+									work_sleep_command = True
+								else:
+									if type(data["varing"][str(command_user[start_wag_sleep_command:end_wag_sleep_command])]) == float:
+										varing_time_sleep_command = float(data["varing"][str(command_user[start_wag_sleep_command:end_wag_sleep_command])])
+										work_sleep_command = True
+					if work_sleep_command:
+						time.sleep(varing_time_sleep_command)
 		if command_user.startswith('save '):
 			if not(len(command_user) <= 4):
 				wag_command_namefile = '{0}.rpld'.format(command_user[5:(len(command_user))])
@@ -137,6 +175,8 @@ while work:
 		if command_user == 'cdata':
 			data = {"varing": {}, "libs": {}}
 			break
+		if command_user == 'exit':
+			work = False
 		if command_user == 'info':
 			with open('config.json') as file_config_data:
 				config_data = json.load(file_config_data)
