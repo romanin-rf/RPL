@@ -1,4 +1,10 @@
-import os, sys, json, pickle, time
+import os, sys, pickle, time, configparser
+
+config_data = configparser.ConfigParser()
+config_data.read('config.ini')
+
+if sys.platform == "win32":
+	os.system("title {0}".format(config_data.get("names", "name")))
 
 data = {"varing": {}, "libs": {}}
 work = True
@@ -178,12 +184,10 @@ while work:
 		if command_user == 'exit':
 			work = False
 		if command_user == 'info':
-			with open('config.json') as file_config_data:
-				config_data = json.load(file_config_data)
 			print("-------------------------------------------")
-			print("> Name: {0}".format(config_data["name"]))
-			print(">> Name Author: {0}".format(config_data["name-author"]))
-			print(">>> Version: {0}".format(config_data["version"]))
+			print("> Name: {0}".format(config_data.get("names", "name")))
+			print(">> Name Author: {0}".format(config_data.get("names", "name-author")))
+			print(">>> Version: {0}".format(config_data.get("settings", "version")))
 			print("-------------------------------------------")
 			break
 		else:
