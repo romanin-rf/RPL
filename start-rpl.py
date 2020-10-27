@@ -9,7 +9,7 @@ while len(list_file_dir) != wag:
 			start_command = 'python RPL.py < '
 			break
 		if str(sys.platform) == "linux":
-			start_command = 'python RPL.py < '
+			start_command = 'python3 RPL.py < '
 			break
 	if list_file_dir[wag] == "RPL.exe":
 		if str(sys.platform) == "win32":
